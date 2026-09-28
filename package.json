@@ -17,6 +17,7 @@
     "@langchain/google-genai": "^2.3.2",
     "@langchain/langgraph": "^1.4.18",
     "@langchain/openai": "^1.5.13",
+    "@vercel/analytics": "^2.0.1",
     "@xyflow/react": "^12.12.0",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",

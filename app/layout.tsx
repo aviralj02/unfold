@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { KeyGate } from "@/components/key-gate";
 import { AppShell } from "@/components/app-shell";
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </KeyGate>
         </TooltipProvider>
         <Toaster theme="light" position="bottom-center" />
+        <Analytics />
       </body>
     </html>
   );
