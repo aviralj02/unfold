@@ -1,12 +1,22 @@
 import { cn } from "@/lib/utils";
 
+/** The Unfold glyph: one step forking into two. Same drawing as app/icon.svg. */
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className={cn("size-5", className)} aria-hidden>
-      <circle cx="7" cy="12" r="3.25" fill="currentColor" />
-      <circle cx="18" cy="6" r="2.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="18" cy="18" r="2.25" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M9.8 10.6 15.8 7.1M9.8 13.4l6 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <svg viewBox="0 0 32 32" className={cn("size-6", className)} aria-hidden>
+      <rect width="32" height="32" rx="8" fill="var(--brand)" />
+      <g fill="var(--background)">
+        <rect x="11" y="5.5" width="10" height="6.5" rx="2" />
+        <rect x="4.5" y="20" width="9.5" height="6.5" rx="2" />
+        <rect x="18" y="20" width="9.5" height="6.5" rx="2" />
+      </g>
+      <path
+        d="M16 12v3.5M9.25 20v-1.5a3 3 0 0 1 3-3h7.5a3 3 0 0 1 3 3V20"
+        fill="none"
+        stroke="var(--background)"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -14,7 +24,7 @@ export function LogoMark({ className }: { className?: string }) {
 export function Logo({ className }: { className?: string }) {
   return (
     <div className={cn("flex items-center gap-2 text-foreground", className)}>
-      <LogoMark className="text-brand" />
+      <LogoMark />
       <span className="font-serif text-[22px] leading-none tracking-tight">Unfold</span>
     </div>
   );
