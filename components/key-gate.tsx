@@ -7,6 +7,7 @@ import { KeyForm } from "@/components/key-form";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { site } from "@/lib/site";
 import { clearSettings, useHydrated, useSettings } from "@/lib/storage";
 
 interface AppConfig {
@@ -38,7 +39,14 @@ export function KeyGate({ children }: { children: React.ReactNode }) {
   const openSettings = useCallback(() => setSettingsOpen(true), []);
   const value = useMemo(() => ({ serverSearch: !!serverSearch, openSettings }), [serverSearch, openSettings]);
 
-  if (!hydrated || serverSearch === null) return <div className="h-full bg-background" aria-busy="true" />;
+  // This is also what the server renders, so crawlers get a real heading and description.
+  if (!hydrated || serverSearch === null)
+    return (
+      <div className="h-full bg-background" aria-busy="true">
+        <h1 className="sr-only">{site.title}</h1>
+        <p className="sr-only">{site.description}</p>
+      </div>
+    );
 
   const unlocked = !!settings.apiKey && !!settings.provider && !!settings.model;
   if (!unlocked) return <Onboarding />;
@@ -92,7 +100,7 @@ function Onboarding() {
         <Logo className="relative" />
         <div className="relative max-w-md">
           <h1 className="font-serif text-[64px] leading-[0.95] tracking-tight">
-            Research,
+            How it works,
             <br />
             <em className="text-brand">mapped out.</em>
           </h1>

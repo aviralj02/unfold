@@ -154,3 +154,9 @@
     stroke-dasharray: none;
   }
 }
+
+/* Edge/IE add their own password reveal button; the key field has its own. */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}

@@ -261,7 +261,7 @@ function ModelField({ models, value, onChange }: { models: ModelEntry[]; value: 
           </datalist>
         </>
       )}
-      <p className="text-xs text-muted-foreground">Larger models write better maps; smaller ones are faster and cheaper.</p>
+      <p className="text-xs text-muted-foreground">Larger models draw better flows; smaller ones are faster and cheaper.</p>
     </div>
   );
 }
