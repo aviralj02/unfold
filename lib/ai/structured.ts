@@ -38,11 +38,14 @@ export async function invokeStructured<S extends z.ZodType>(
   config?: RunnableConfig,
 ): Promise<z.infer<S>> {
   const llm = createChatModel(ai, effort);
-  try {
-    const structured = llm.withStructuredOutput(schema, { name, method: structuredMethod(ai.provider) });
-    return (await structured.invoke(messages, config)) as z.infer<S>;
-  } catch (err) {
-    if (isFatal(err)) throw err;
+  const method = structuredMethod(ai.provider);
+  if (method !== "prompt") {
+    try {
+      const structured = llm.withStructuredOutput(schema, { name, method });
+      return (await structured.invoke(messages, config)) as z.infer<S>;
+    } catch (err) {
+      if (isFatal(err)) throw err;
+    }
   }
 
   const jsonSchema = JSON.stringify(toJsonSchema(schema));

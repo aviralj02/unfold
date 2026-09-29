@@ -160,19 +160,26 @@ export function validateFlow(draft: Draft, request: ResearchRequest, sources: Re
 export function buildResearchGraph({ ai, tavilyKey }: WorkflowDeps) {
   async function planner(state: State, config: LangGraphRunnableConfig): Promise<Partial<State>> {
     const { system, user } = plannerPrompt(state.request);
-    const plan = await invokeStructured(
-      ai,
-      "low",
-      PlanSchema,
-      "search_plan",
-      [
-        { role: "system", content: system },
-        { role: "user", content: user },
-      ],
-      config,
-    );
     const fallback = state.request.focus ? `how ${state.request.focus.title} works` : state.request.rootQuery;
-    const queries = [...new Set(plan.searchQueries.map((q) => q.trim()).filter(Boolean))].slice(0, LIMITS.searchQueries);
+    let planned: string[] = [];
+    try {
+      const plan = await invokeStructured(
+        ai,
+        "low",
+        PlanSchema,
+        "search_plan",
+        [
+          { role: "system", content: system },
+          { role: "user", content: user },
+        ],
+        config,
+      );
+      planned = plan.searchQueries;
+    } catch (err) {
+      // A malformed plan isn't worth failing research over: search the question itself.
+      if (!(err instanceof SyntaxError || err instanceof z.ZodError)) throw err;
+    }
+    const queries = [...new Set(planned.map((q) => q.trim()).filter(Boolean))].slice(0, LIMITS.searchQueries);
     return { searchQueries: queries.length ? queries : [fallback] };
   }
 

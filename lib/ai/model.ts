@@ -54,7 +54,12 @@ export function createChatModel({ provider, apiKey, model }: AIConfig, effort: E
   }
 }
 
-/** Native JSON-schema output where the provider supports it; tool calling elsewhere. */
-export function structuredMethod(provider: ProviderId): "jsonSchema" | "functionCalling" {
-  return provider === "openrouter" || provider === "groq" ? "functionCalling" : "jsonSchema";
+/**
+ * How to get structured output from each provider. Anthropic, OpenAI and
+ * Gemini enforce a JSON schema natively. Open-weight models on Groq and
+ * OpenRouter often ignore a forced tool call (Groq: "tool_use_failed"), so
+ * they go straight to JSON prompting instead of wasting a failing request.
+ */
+export function structuredMethod(provider: ProviderId): "jsonSchema" | "prompt" {
+  return provider === "openrouter" || provider === "groq" ? "prompt" : "jsonSchema";
 }

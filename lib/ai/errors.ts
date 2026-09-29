@@ -26,6 +26,12 @@ export function describeError(err: unknown, providerLabel: string): { message: s
   if (status === 404 || /model.*(not found|does not exist)|NOT_FOUND/i.test(msg)) {
     return { code: "auth", message: `That model isn't available for your ${providerLabel} key. Pick another in Settings.` };
   }
+  if (/tool_use_failed|did not call a tool|failed to call a function/i.test(msg)) {
+    return {
+      code: "invalid_output",
+      message: "This model struggled to return a structured answer. Retry, or pick a larger model in Settings.",
+    };
+  }
   if (e?.name === "AbortError" || e?.name === "TimeoutError" || /abort|timed? ?out/i.test(msg)) {
     return { code: "timeout", message: "Research took too long and was stopped. Try again, or a narrower question." };
   }
