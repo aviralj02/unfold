@@ -35,6 +35,7 @@ Unfold gives you that picture directly:
 | **Bring your own AI**   | Works with Anthropic, OpenAI, Gemini, OpenRouter or Groq. Paste a key, and Unfold detects the provider and lists the models the key can use. |
 | **Saved locally**       | Canvases autosave in the browser. You can rename, delete and reopen them, and research keeps running if you leave the page.                  |
 | **Canvas tools**        | Pan, zoom, fit to view, minimap, drag to rearrange, and **Tidy layout** to reset the arrangement.                                            |
+| **Export**              | Download a PNG of the whole flow, copy it as a Mermaid diagram for GitHub, Notion or Obsidian, or download it as Markdown with every step's details.|
 
 ---
 

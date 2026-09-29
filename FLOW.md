@@ -155,6 +155,7 @@ React Flow (steps + groups + edges)               components/canvas/research-can
   ├─ drag / break down / collapse → autosave (600ms) → localStorage "unfold:canvases"
   ├─ Tidy layout → re-run dagre on main flow, re-seat groups
   ├─ select step → panel: receives / hands off / how it works / key points / sources
+  ├─ Export → PNG (whole flow + title/footer) · Mermaid (clipboard) · Markdown     lib/export/
   └─ Ctrl/⌘+S save · F fit · +/- zoom · Esc close
 ```
 
