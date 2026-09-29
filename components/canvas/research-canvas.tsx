@@ -9,6 +9,7 @@ import {
   MiniMap,
   ReactFlow,
   ReactFlowProvider,
+  ViewportPortal,
   useEdgesState,
   useNodesState,
   useReactFlow,
@@ -40,6 +41,7 @@ import {
   type FlowStep,
 } from "./flow-types";
 import { nodeTypes } from "./nodes";
+import { ExportMenu } from "./export-menu";
 import { ArrowDefs, edgeTypes } from "./relation-edge";
 
 type SaveState = "saved" | "saving" | "error";
@@ -327,10 +329,13 @@ function CanvasInner({ canvas }: { canvas: ResearchCanvas }) {
           </TooltipTrigger>
           <TooltipContent side="bottom">Ctrl / ⌘ + S</TooltipContent>
         </Tooltip>
+        <ExportMenu
+          meta={{ title: canvas.title, rootQuery: canvas.rootQuery, summary: canvas.summary }}
+          onBeforeImage={clearSelection}
+        />
       </WorkspaceHeader>
 
       <div className="relative flex-1">
-        <ArrowDefs />
         <ReactFlow<FlowNode, FlowEdge>
           nodes={nodes}
           edges={displayEdges}
@@ -349,6 +354,10 @@ function CanvasInner({ canvas }: { canvas: ResearchCanvas }) {
           proOptions={{ hideAttribution: true }}
           aria-label="Flow canvas"
         >
+          {/* Inside the viewport so image exports include the arrowheads. */}
+          <ViewportPortal>
+            <ArrowDefs />
+          </ViewportPortal>
           <Background variant={BackgroundVariant.Dots} gap={22} size={1.2} color="var(--edge)" />
           <MiniMap
             pannable

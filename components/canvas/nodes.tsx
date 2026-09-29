@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { AlertCircle, Layers, Link2, Loader2, Minimize2, SquareSplitVertical } from "lucide-react";
 import { KIND_META } from "@/lib/kinds";
 import { STEP_SIZE } from "@/lib/layout";
+import { EXPORT_HIDDEN } from "@/lib/export/png";
 import { cn } from "@/lib/utils";
 import { useCanvasActions } from "./canvas-context";
 import type { FlowGroup, FlowStep } from "./flow-types";
@@ -54,7 +55,9 @@ export const StepCard = memo(function StepCard({ id, data, selected }: NodeProps
           loading && "border-brand/50",
         )}
       >
-        {loading && <span className="pointer-events-none absolute inset-0 animate-pulse bg-brand-soft/50" aria-hidden />}
+        {loading && (
+          <span className={cn("pointer-events-none absolute inset-0 animate-pulse bg-brand-soft/50", EXPORT_HIDDEN)} aria-hidden />
+        )}
 
         <div className="relative flex items-center gap-2">
           <span
@@ -101,6 +104,7 @@ export const StepCard = memo(function StepCard({ id, data, selected }: NodeProps
                 explore(id);
               }}
               className={cn(
+                EXPORT_HIDDEN,
                 "nodrag flex items-center gap-1 rounded-md px-1.5 py-1 text-[11px] font-medium text-brand opacity-0 outline-none transition-opacity hover:bg-brand-soft group-hover/node:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-ring/50",
                 selected && "opacity-100",
               )}
@@ -134,7 +138,10 @@ export const GroupBox = memo(function GroupBox({ data }: NodeProps<FlowGroup>) {
               e.stopPropagation();
               removeSubflow(node.id);
             }}
-            className="nodrag flex items-center gap-1 rounded-md px-1.5 py-1 text-[11px] text-muted-foreground outline-none hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
+            className={cn(
+              EXPORT_HIDDEN,
+              "nodrag flex items-center gap-1 rounded-md px-1.5 py-1 text-[11px] text-muted-foreground outline-none hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50",
+            )}
             aria-label={`Remove ${node.title}`}
             title="Remove this breakdown"
           >
